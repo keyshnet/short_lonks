@@ -1,0 +1,69 @@
+@extends('layouts.admin')
+
+@section('title', 'Add Short LInk')
+
+@section('title_block')
+    <a href="{{ route('links.index') }}" class="btn btn-primary float-sm-right"> All links </a>
+@endsection
+
+@section('content')
+<div class="card  card-primary card-outline">
+    <div class="card-body p-0">
+<!-- general form elements disabled -->
+<div class=" card-warning">
+    <!-- /.card-header -->
+    <div class="card-body">
+        @if(session('success'))
+            <div class="alert alert-success" role="alert">
+                <div><i class="icon fa fa-check"></i> {{ session('success') }}</div>
+            </div>
+            <script defer>
+                window.onload = function() {
+                    $('.alert').delay(1000).slideUp(300);
+                };
+            </script>
+        @endif
+        <form action="{{ route('links.store') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Url</label>
+                        <input type="text" name="url" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Short Link</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">{{ config('app.url') }}/</span>
+                            </div>
+                            <input type="text" name="short_link" class="form-control" value="{{ $generateLink }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input type="checkbox"  name="active" class="form-check-input" id="active" checked>
+                        <label class="form-check-label" for="active">Active</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Add</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+    </div>
+</div>
+@endsection
